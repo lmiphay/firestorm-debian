@@ -25,6 +25,7 @@ RUN \
 RUN pip install autobuild
 
 # off piste from here:
+RUN apt-get --yes install libxrandr-dev libxcursor-dev libxcomposite-dev libxcb-shm0 sudo
 RUN pip install --upgrade cmake
 RUN pip install --upgrade mercurial
 

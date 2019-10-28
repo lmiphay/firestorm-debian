@@ -51,6 +51,7 @@ configure:
 
 compile:
 	$(EXEC_CMD) autobuild build -A 64 -c ReleaseFS_open
+	@ls -l $(SRC)/phoenix-firestorm-lgpl/build-linux-x86_64/newview/*.xz
 
 run:
 	cd $(SRC)/phoenix-firestorm-lgpl/build-linux-x86_64/newview/packaged && ./firestorm
