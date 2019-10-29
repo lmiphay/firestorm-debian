@@ -1,0 +1,22 @@
+#!/bin/bash
+
+if [ $# -eq 1 ] ; then
+    echo "usage: $(basename $0) <base_dir>"
+    exit 1
+fi
+
+base_dir=$1
+
+for repo in fs-build-variables phoenix-firestorm-lgpl ; do
+
+    if [ ! -d "$base_dir/$repo" ] ; then
+	echo "cloning: $repo"
+	hg clone "https://hg.firestormviewer.org/$repo" "$base_dir/$repo"
+    else
+	echo "updating: $repo"
+	cd "$base_dir/$repo" && hg pull -u
+    fi
+
+done
+
+exit 0
