@@ -12,7 +12,7 @@ RUN \
 	apt-get upgrade
 
 RUN \
-	apt-get --yes install --install-recommends make g++ gdb python2.7 python-pip && \
+	apt-get --yes install --install-recommends make g++ gdb mercurial python2.7 python-pip && \
 	apt-get --yes install --install-recommends libgl1-mesa-dev libglu1-mesa-dev libstdc++6 libx11-dev libxinerama-dev libxml2-dev libxrender-dev
 
 # this fails:
@@ -27,7 +27,6 @@ RUN pip install autobuild
 # off piste from here:
 RUN apt-get --yes install libxrandr-dev libxcursor-dev libxcomposite-dev libxcb-shm0 sudo
 RUN pip install --upgrade cmake
-RUN pip install --upgrade mercurial
 
 RUN \
 	apt-get install -y systemd \
@@ -42,6 +41,8 @@ RUN \
 	/lib/systemd/system/sockets.target.wants/*initctl* \
 	/lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup* \
 	/lib/systemd/system/systemd-update-utmp*
+
+COPY cp-user clone-or-update /usr/local/bin/
 
 VOLUME [ "/sys/fs/cgroup" ]
 
