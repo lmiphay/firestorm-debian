@@ -1,0 +1,12 @@
+#!/bin/bash
+
+if [ $# -eq 0 ] ; then
+    echo "$(id -nu) $(id -ng) $(id -u) $(id -g)"
+elif [ $# -eq 4 ] ; then
+    groupadd --gid $4 $2
+    useradd --uid $3 --gid $2 $1
+else
+    echo "usage: $(basename $0) <username> <groupname> <uid> <gid>"
+fi
+
+exit 0
