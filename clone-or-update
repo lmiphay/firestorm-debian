@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ $# -eq 1 ] ; then
+if [ $# -ne 1 ] ; then
     echo "usage: $(basename $0) <base_dir>"
     exit 1
 fi
