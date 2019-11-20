@@ -176,4 +176,11 @@ Deleted: sha256:0aca2d6439d81c7a28184555943e8746258e51e67df7f82aaa5b73f1306ae44f
 $
 ```
 
-Note that this doesn't remove the base debian container.
+Note that this doesn't remove the mercurial repos or the base debian container.
+
+# References
+
++ [Firestorm Debian build](https://wiki.firestormviewer.org/fs_compiling_firestorm_alexivy_debian_9)
++ [Autobuild](http://wiki.secondlife.com/wiki/Autobuild)
++ [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
++ [Bitbucket sunsetting mercurial (dates)](https://bitbucket.org/blog/sunsetting-mercurial-support-in-bitbucket)
