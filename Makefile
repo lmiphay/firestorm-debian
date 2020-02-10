@@ -10,16 +10,19 @@ FD_AUTOBUILD_BUILD_ID ?= $(shell hostname)-$(shell date +'%F-%T')
 
 EXEC_CMD = \
 	docker exec \
-		--workdir $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm-lgpl \
+		--workdir $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm \
 		--env AUTOBUILD_VARIABLES_FILE=$(FD_CONTAINER_REPOS_DIR)/fs-build-variables/variables \
 		--env AUTOBUILD_VARIABLES_ID=$(FD_AUTOBUILD_BUILD_ID) \
+		--env AUTOBUILD_VSVER=120 \
 		--env PATH=/usr/local/bin:/usr/bin:/bin \
 		--user $(FD_CONTAINER_USER_GROUP) \
 		$(FD_FIRESTORM_CONTAINER)
 
+nocmd: help
+
 all: settings pull image container start
 
-.PHONY: settings pull image container build start setup clone_update configure compile run clean
+.PHONY: settings pull image container build start setup clone_update configure compile run clean help
 
 .EXPORT_ALL_VARIABLES:
 
@@ -65,11 +68,26 @@ configure:
 
 compile:
 	$(EXEC_CMD) autobuild build -A 64 -c ReleaseFS_open
-	@ls -l $(FD_HOST_REPOS_DIR)/phoenix-firestorm-lgpl/build-linux-x86_64/newview/*.xz
+	@ls -l $(FD_HOST_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/newview/*.xz
 
 run:
-	cd $(FD_HOST_REPOS_DIR)/phoenix-firestorm-lgpl/build-linux-x86_64/newview/packaged && ./firestorm
+	cd $(FD_HOST_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/newview/packaged && ./firestorm
 
 clean:
 	-docker rm --force $(FD_FIRESTORM_CONTAINER)
 	-docker rmi --force $(FD_FIRESTORM_IMAGE)
+	@echo ""
+	@docker ps -a
+	@echo ""
+	@docker images
+
+help:
+	@echo "image - make the docker imake"
+	@echo "container - create the container"
+	@echo "start - start the container"
+	@echo "setup - copy user id into the container"
+	@echo "clone_update - clone or update the project"
+	@echo "configure - the project"
+	@echo "compile - the project"
+	@echo "run - the built binary"
+	@echo "clean - remove container and image"

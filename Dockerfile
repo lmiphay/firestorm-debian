@@ -12,7 +12,7 @@ RUN \
 	apt-get upgrade
 
 RUN \
-	apt-get --yes install --install-recommends make g++ gdb mercurial python2.7 python-pip && \
+	apt-get --yes install --install-recommends make g++ gdb git python2.7 python-pip && \
 	apt-get --yes install --install-recommends libgl1-mesa-dev libglu1-mesa-dev libstdc++6 libx11-dev libxinerama-dev libxml2-dev libxrender-dev
 
 # this fails:
@@ -22,7 +22,8 @@ RUN \
 # The command '/bin/sh -c pip install --upgrade pip && 	pip install autobuild' returned a non-zero code: 1
 # see: https://github.com/pypa/pip/issues/5599
 
-RUN pip install autobuild
+# RUN pip install autobuild
+RUN pip install "git+https://vcs.firestormviewer.org/autobuild-1.1#egg=autobuild"
 
 # off piste from here:
 RUN apt-get --yes install libxrandr-dev libxcursor-dev libxcomposite-dev libxcb-shm0 sudo

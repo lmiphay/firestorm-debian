@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# see:
+#     1. https://wiki.firestormviewer.org/fs_compiling_firestorm_windows
+#     2. https://jira.firestormviewer.org/browse/FIRE-29226
+#     3. https://wiki.firestormviewer.org/fs_compiling_firestorm_alexivy_debian_9 (replacing mercurial with git)
+
+base_url="https://vcs.firestormviewer.org"
+
 if [ $# -ne 1 ] ; then
     echo "usage: $(basename $0) <base_dir>"
     exit 1
@@ -7,14 +14,14 @@ fi
 
 base_dir=$1
 
-for repo in fs-build-variables phoenix-firestorm-lgpl ; do
+for repo in fs-build-variables phoenix-firestorm ; do
 
-    if [ ! -d "$base_dir/$repo" ] ; then
-	echo "cloning: $repo"
-	hg clone "https://hg.firestormviewer.org/$repo" "$base_dir/$repo"
+    if [ ! -d "${base_dir}/${repo}" ] ; then
+	echo "cloning: ${base_url}/${repo}"
+	git clone "${base_url}/${repo}" "${base_dir}/${repo}"
     else
-	echo "updating: $repo"
-	cd "$base_dir/$repo" && hg pull -u
+	echo "updating: ${base_dir}/${repo}"
+	cd "${base_dir}/${repo}" && git pull
     fi
 
 done

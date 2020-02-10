@@ -5,7 +5,7 @@ A docker build environment for firestorm based on debian:stretch.
 This builds:
 
 1. a debian 9 stretch container with the firestorm build dependencies installed.
-2. makes firestorm build from the head of phoenix-firestorm-lgpl.
+2. makes firestorm build from the head of: phoenix-firestorm
 
 # Host Requirements
 
@@ -130,7 +130,7 @@ docker exec firestorm-debian-stretch cp-user lmiphay lmiphay 1004 1009
 docker exec firestorm-debian-stretch chown lmiphay:lmiphay /local/src/firestorm
 
 drwxr-xr-x 1 lmiphay lmiphay  64 Oct 28 18:31 fs-build-variables
-drwxr-xr-x 1 lmiphay lmiphay 454 Oct 29 19:36 phoenix-firestorm-lgpl
+drwxr-xr-x 1 lmiphay lmiphay 454 Oct 29 19:36 phoenix-firestorm
 $
 ```
 
@@ -138,13 +138,7 @@ $
 
 ```
 $ make clone_update
-requesting all changes
-adding changesets
-adding manifests
-adding file changes
-added 50 changesets with 52 changes to 3 files
-updating to branch default
-3 files updated, 0 files merged, 0 files removed, 0 files unresolved
+<TBD>
 ...
 $
 ```
@@ -176,10 +170,12 @@ Deleted: sha256:0aca2d6439d81c7a28184555943e8746258e51e67df7f82aaa5b73f1306ae44f
 $
 ```
 
-Note that this doesn't remove the mercurial repos or the base debian container.
+Note that this doesn't remove the repos or the base debian container.
 
 # References
 
++ [Firestorm git transition ticket](https://jira.firestormviewer.org/browse/FIRE-29226)
++ [Firestorm Windows build with git](https://wiki.firestormviewer.org/fs_compiling_firestorm_windows)
 + [Firestorm Debian build](https://wiki.firestormviewer.org/fs_compiling_firestorm_alexivy_debian_9)
 + [Autobuild](http://wiki.secondlife.com/wiki/Autobuild)
 + [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
