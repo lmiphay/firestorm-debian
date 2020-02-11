@@ -14,7 +14,7 @@ fi
 
 base_dir=$1
 
-for repo in fs-build-variables phoenix-firestorm ; do
+for repo in autobuild-1.1 fs-build-variables phoenix-firestorm ; do
 
     if [ ! -d "${base_dir}/${repo}" ] ; then
 	echo "cloning: ${base_url}/${repo}"
