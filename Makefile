@@ -13,7 +13,6 @@ EXEC_CMD = \
 		--workdir $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm \
 		--env AUTOBUILD_VARIABLES_FILE=$(FD_CONTAINER_REPOS_DIR)/fs-build-variables/variables \
 		--env AUTOBUILD_VARIABLES_ID=$(FD_AUTOBUILD_BUILD_ID) \
-		--env AUTOBUILD_VSVER=120 \
 		--env PATH=/usr/local/bin:/usr/bin:/bin \
 		--user $(FD_CONTAINER_USER_GROUP) \
 		$(FD_FIRESTORM_CONTAINER)
@@ -54,6 +53,8 @@ build: start setup clone_update configure compile
 start:
 	docker start $(FD_FIRESTORM_CONTAINER)
 	@docker ps
+shell:
+	docker exec -it $(FD_FIRESTORM_CONTAINER) /bin/bash
 
 setup:
 	docker exec $(FD_FIRESTORM_CONTAINER) cp-user $(shell ./cp-user)
@@ -82,12 +83,14 @@ clean:
 	@docker images
 
 help:
-	@echo "image - make the docker imake"
+	@echo "settings - list the current settings"
+	@echo "image - make the docker image"
 	@echo "container - create the container"
 	@echo "start - start the container"
+	@echo "shell - start a shell on the container"
 	@echo "setup - copy user id into the container"
-	@echo "clone_update - clone or update the project"
+	@echo "clone_update - clone or update the projects"
 	@echo "configure - the project"
 	@echo "compile - the project"
-	@echo "run - the built binary"
+	@echo "run - execute the binary built by compile"
 	@echo "clean - remove container and image"
