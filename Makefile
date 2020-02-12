@@ -8,6 +8,9 @@ FD_CONTAINER_USER_GROUP ?= $(shell id -un):$(shell id -gn)
 
 FD_AUTOBUILD_BUILD_ID ?= $(shell hostname)-$(shell date +'%F-%T')
 
+FD_BASE_URL ?= https://vcs.firestormviewer.org
+FD_REPOS ?= autobuild-1.1 fs-build-variables phoenix-firestorm
+
 EXEC_CMD = \
 	docker exec \
 		--workdir $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm \
@@ -19,16 +22,16 @@ EXEC_CMD = \
 
 nocmd: help
 
-all: settings pull image container start
+all: settings image container start
 
-.PHONY: settings pull image container build start setup clone_update configure compile run clean help
+.PHONY: nocmd all settings pullimage image container build start setup clone pull configure compile run clean help
 
 .EXPORT_ALL_VARIABLES:
 
 settings:
 	@env | egrep 'FD_' | sort
 
-pull:
+pullimage:
 	docker pull debian:$(FD_DEBIAN_VERSION)
 
 image:
@@ -53,16 +56,21 @@ build: start setup clone_update configure compile
 start:
 	docker start $(FD_FIRESTORM_CONTAINER)
 	@docker ps
+
 shell:
 	docker exec -it $(FD_FIRESTORM_CONTAINER) /bin/bash
 
-setup:
-	docker exec $(FD_FIRESTORM_CONTAINER) cp-user $(shell ./cp-user)
-	docker exec $(FD_FIRESTORM_CONTAINER) chown $(FD_CONTAINER_USER_GROUP) $(FD_CONTAINER_REPOS_DIR)
+copy-user:
+	docker exec $(FD_FIRESTORM_CONTAINER) groupadd --force --gid $(shell id -g) $(shell id -gn)
+	docker exec $(FD_FIRESTORM_CONTAINER) useradd --uid $(shell id -u) --gid $(shell id -g) $(USER)
+	docker exec $(FD_FIRESTORM_CONTAINER) chown $(FD_CONTAINER_REPOS_DIR)
 	@docker exec $(FD_FIRESTORM_CONTAINER) ls -l $(FD_CONTAINER_REPOS_DIR)
 
-clone_update:
-	$(EXEC_CMD) clone-or-update $(FD_CONTAINER_REPOS_DIR)
+clone:
+	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git clone $(FD_BASE_URL)/$$repo $(FD_CONTAINER_REPOS_DIR)/$$repo ; done
+
+pull:
+	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git pull $(FD_CONTAINER_REPOS_DIR)/$$repo ; done
 
 configure:
 	$(EXEC_CMD) autobuild configure -A 64 -c ReleaseFS_open
@@ -88,8 +96,9 @@ help:
 	@echo "container - create the container"
 	@echo "start - start the container"
 	@echo "shell - start a shell on the container"
-	@echo "setup - copy user id into the container"
-	@echo "clone_update - clone or update the projects"
+	@echo "copy-user - copy user:group into the container"
+	@echo "clone - clone the projects"
+	@echo "pull - update the projects"
 	@echo "configure - the project"
 	@echo "compile - the project"
 	@echo "run - execute the binary built by compile"

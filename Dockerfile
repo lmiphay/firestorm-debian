@@ -38,8 +38,6 @@ RUN \
 	/lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup* \
 	/lib/systemd/system/systemd-update-utmp*
 
-COPY cp-user clone-or-update /usr/local/bin/
-
 VOLUME [ "/sys/fs/cgroup" ]
 
 CMD ["/lib/systemd/systemd"]
