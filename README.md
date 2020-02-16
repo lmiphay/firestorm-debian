@@ -146,6 +146,16 @@ Cloning into '/local/src/firestorm/phoenix-firestorm'...
 $
 ```
 
+## Update the repos
+
+```
+$ make pull
+for repo in autobuild-1.1 fs-build-variables phoenix-firestorm ; do docker exec --user lmiphay:lmiphay firestorm-debian-stretch git -C /local/src/firestorm/$repo pull ; done
+Already up-to-date.
+Already up-to-date.
+Already up-to-date.
+```
+
 ## Remove the build container and image
 
 *This is a destructive operation:*

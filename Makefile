@@ -75,7 +75,7 @@ clone:
 	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git clone $(FD_BASE_URL)/$$repo $(FD_CONTAINER_REPOS_DIR)/$$repo ; done
 
 pull:
-	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git pull $(FD_CONTAINER_REPOS_DIR)/$$repo ; done
+	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git -C $(FD_CONTAINER_REPOS_DIR)/$$repo pull ; done
 
 configure:
 	$(BUILD_CMD) autobuild configure -A 64 -c ReleaseFS_open
