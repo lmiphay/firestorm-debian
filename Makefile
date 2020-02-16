@@ -13,6 +13,11 @@ FD_REPOS ?= autobuild-1.1 fs-build-variables phoenix-firestorm
 
 EXEC_CMD = \
 	docker exec \
+		--user $(FD_CONTAINER_USER_GROUP) \
+		$(FD_FIRESTORM_CONTAINER)
+
+BUILD_CMD = \
+	docker exec \
 		--workdir $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm \
 		--env AUTOBUILD_VARIABLES_FILE=$(FD_CONTAINER_REPOS_DIR)/fs-build-variables/variables \
 		--env AUTOBUILD_VARIABLES_ID=$(FD_AUTOBUILD_BUILD_ID) \
@@ -24,7 +29,7 @@ nocmd: help
 
 all: settings image container start
 
-.PHONY: nocmd all settings pullimage image container build start setup clone pull configure compile run clean help
+.PHONY: nocmd all settings pullimage image container build start copy-user clone pull configure compile run clean help
 
 .EXPORT_ALL_VARIABLES:
 
@@ -58,12 +63,12 @@ start:
 	@docker ps
 
 shell:
-	docker exec -it $(FD_FIRESTORM_CONTAINER) /bin/bash
+	docker exec --user $(FD_CONTAINER_USER_GROUP) -it $(FD_FIRESTORM_CONTAINER) /bin/bash
 
 copy-user:
 	docker exec $(FD_FIRESTORM_CONTAINER) groupadd --force --gid $(shell id -g) $(shell id -gn)
 	docker exec $(FD_FIRESTORM_CONTAINER) useradd --uid $(shell id -u) --gid $(shell id -g) $(USER)
-	docker exec $(FD_FIRESTORM_CONTAINER) chown $(FD_CONTAINER_REPOS_DIR)
+	docker exec $(FD_FIRESTORM_CONTAINER) chown $(FD_CONTAINER_USER_GROUP) $(FD_CONTAINER_REPOS_DIR)
 	@docker exec $(FD_FIRESTORM_CONTAINER) ls -l $(FD_CONTAINER_REPOS_DIR)
 
 clone:
@@ -73,10 +78,10 @@ pull:
 	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git pull $(FD_CONTAINER_REPOS_DIR)/$$repo ; done
 
 configure:
-	$(EXEC_CMD) autobuild configure -A 64 -c ReleaseFS_open
+	$(BUILD_CMD) autobuild configure -A 64 -c ReleaseFS_open
 
 compile:
-	$(EXEC_CMD) autobuild build -A 64 -c ReleaseFS_open
+	$(BUILD_CMD) autobuild build -A 64 -c ReleaseFS_open
 	@ls -l $(FD_HOST_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/newview/*.xz
 
 run:
