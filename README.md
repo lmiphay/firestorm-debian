@@ -1,6 +1,6 @@
 # firestorm-debian
 
-A docker build environment for firestorm based on debian:stretch.
+A docker build environment for firestorm based on: debian:stretch
 
 This builds:
 
@@ -125,8 +125,9 @@ $
 ## Synchronise the user accounts from host to container
 
 ```
-$ make setup
-docker exec firestorm-debian-stretch cp-user lmiphay lmiphay 1004 1009
+$ make copy-user
+docker exec firestorm-debian-stretch groupadd --force --gid 1009 lmiphay
+docker exec firestorm-debian-stretch useradd --uid 1004 --gid 1009 lmiphay
 docker exec firestorm-debian-stretch chown lmiphay:lmiphay /local/src/firestorm
 
 drwxr-xr-x 1 lmiphay lmiphay  64 Oct 28 18:31 fs-build-variables
@@ -134,12 +135,14 @@ drwxr-xr-x 1 lmiphay lmiphay 454 Oct 29 19:36 phoenix-firestorm
 $
 ```
 
-## Clone/Update the repos
+## Clone the repos
 
 ```
-$ make clone_update
-<TBD>
-...
+$ make clone
+for repo in autobuild-1.1 fs-build-variables phoenix-firestorm ; do docker exec --user lmiphay:lmiphay firestorm-debian-stretch git clone https://vcs.firestormviewer.org/$repo /local/src/firestorm/$repo ; done
+Cloning into '/local/src/firestorm/autobuild-1.1'...
+Cloning into '/local/src/firestorm/fs-build-variables'...
+Cloning into '/local/src/firestorm/phoenix-firestorm'...
 $
 ```
 
@@ -147,7 +150,7 @@ $
 
 *This is a destructive operation:*
 ```
-$ make  clean
+$ make clean
 docker rm --force firestorm-debian-stretch
 firestorm-debian-stretch
 docker rmi --force firestorm/debian:stretch
