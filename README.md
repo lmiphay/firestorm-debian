@@ -236,3 +236,4 @@ Note that this doesn't remove the repos or the base debian container.
 + [Autobuild](http://wiki.secondlife.com/wiki/Autobuild)
 + [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
 + [Bitbucket sunsetting mercurial (dates)](https://bitbucket.org/blog/sunsetting-mercurial-support-in-bitbucket)
++ [Compiling the Firestorm Viewer](https://beccapet.datahamster.com/2019/02/01/compiling-the-firestorm-viewer/)
