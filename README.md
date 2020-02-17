@@ -45,6 +45,7 @@ image - make the docker image
 container - create the container
 start - start the container
 shell - start a shell on the container
+rootshell - start a root shell on the container
 copy-user - copy user:group into the container
 clone - clone the projects
 pull - update the projects
@@ -179,6 +180,11 @@ Warning: no --id argument or AUTOBUILD_BUILD_ID environment variable specified;
        PLATFORM: linux
             KDU: false
 ...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /local/src/firestorm/phoenix-firestorm/build-linux-x86_64
+Finished
+$
 ```
 
 
