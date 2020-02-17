@@ -21,8 +21,10 @@ RUN pip install "git+https://vcs.firestormviewer.org/autobuild-1.1#egg=autobuild
 # off piste from here:
 RUN apt-get --yes install libxrandr-dev libxcursor-dev libxcomposite-dev libxcb-shm0 sudo
 
-RUN apt-get --yes install cmake
-#RUN pip install --upgrade cmake
+# install cmake >=3.8.0 (3.7.2 is the default one)
+RUN echo "deb http://deb.debian.org/debian stretch-backports main" >/etc/apt/sources.list.d/stretch-backports.list \
+ && apt-get --yes update \
+ && apt-get --yes -t stretch-backports install --install-recommends cmake
 
 RUN \
 	apt-get install -y systemd \
