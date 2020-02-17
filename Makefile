@@ -65,6 +65,9 @@ start:
 shell:
 	docker exec --user $(FD_CONTAINER_USER_GROUP) -it $(FD_FIRESTORM_CONTAINER) /bin/bash
 
+rootshell:
+	docker exec -it $(FD_FIRESTORM_CONTAINER) /bin/bash
+
 copy-user:
 	docker exec $(FD_FIRESTORM_CONTAINER) groupadd --force --gid $(shell id -g) $(shell id -gn)
 	docker exec $(FD_FIRESTORM_CONTAINER) useradd --uid $(shell id -u) --gid $(shell id -g) $(USER)
