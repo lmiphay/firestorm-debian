@@ -35,18 +35,40 @@ These settings can be overriden from the environment.
 
 # Building
 
+## Help
+
+Outline help is available:
+```
+$ make help
+settings - list the current settings
+image - make the docker image
+container - create the container
+start - start the container
+shell - start a shell on the container
+copy-user - copy user:group into the container
+clone - clone the projects
+pull - update the projects
+configure - the project
+compile - the project
+run - execute the binary built by compile
+clean - remove container and image
+$
+```
+
 ## Check settings
 
 Examine and fix (if necessary) the configured settings:
 ```
 $ make settings
-FD_AUTOBUILD_BUILD_ID=nur-2019-11-19-21:11:34
+FD_AUTOBUILD_BUILD_ID=nur-2020-02-17-21:09:59
+FD_BASE_URL=https://vcs.firestormviewer.org
 FD_CONTAINER_REPOS_DIR=/local/src/firestorm
 FD_CONTAINER_USER_GROUP=lmiphay:lmiphay
 FD_DEBIAN_VERSION=stretch
 FD_FIRESTORM_CONTAINER=firestorm-debian-stretch
 FD_FIRESTORM_IMAGE=firestorm/debian:stretch
 FD_HOST_REPOS_DIR=/cache/src/firestorm
+FD_REPOS=autobuild-1.1 fs-build-variables phoenix-firestorm
 $
 ```
 
@@ -146,6 +168,20 @@ Cloning into '/local/src/firestorm/phoenix-firestorm'...
 $
 ```
 
+# Configure
+
+```
+$ make configure
+docker exec --workdir /local/src/firestorm/phoenix-firestorm --env AUTOBUILD_VARIABLES_FILE=/local/src/firestorm/fs-build-variables/variables --env AUTOBUILD_VARIABLES_ID=nur-2020-02-17-21:26:20 --env PATH=/usr/local/bin:/usr/bin:/bin --user lmiphay:lmiphay firestorm-debian-stretch autobuild configure -A 64 -c ReleaseFS_open
+Warning: no --id argument or AUTOBUILD_BUILD_ID environment variable specified;
+    using a value from the UTC date and time (200482126), which may not be unique
+ '/bin/bash' '../scripts/configure_firestorm.sh' '--config' '--version' '--opensim' '--platform linux' '--package'
+       PLATFORM: linux
+            KDU: false
+...
+```
+
+
 ## Update the repos
 
 ```
@@ -154,6 +190,7 @@ for repo in autobuild-1.1 fs-build-variables phoenix-firestorm ; do docker exec 
 Already up-to-date.
 Already up-to-date.
 Already up-to-date.
+$
 ```
 
 ## Remove the build container and image
