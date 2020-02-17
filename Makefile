@@ -104,6 +104,7 @@ help:
 	@echo "container - create the container"
 	@echo "start - start the container"
 	@echo "shell - start a shell on the container"
+	@echo "rootshell - start a rootshell on the container"
 	@echo "copy-user - copy user:group into the container"
 	@echo "clone - clone the projects"
 	@echo "pull - update the projects"
