@@ -1,0 +1,24 @@
+diff --git a/autobuild.xml b/autobuild.xml
+index 25b577425a..03f9cca0bc 100644
+--- a/autobuild.xml
++++ b/autobuild.xml
+@@ -4047,7 +4047,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
+                   <string>../scripts/configure_firestorm.sh</string>
+                   <string>--build</string>
+                   <string>--version</string>
+-                  <string>--opensim</string>
++                  <string>--openal</string>
++                  <string>--avx2</string>
+                 </array>
+               </map>
+               <key>configure</key>
+@@ -4059,7 +4060,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
+                   <string>../scripts/configure_firestorm.sh</string>
+                   <string>--config</string>
+                   <string>--version</string>
+-                  <string>--opensim</string>
++                  <string>--openal</string>
++                  <string>--avx2</string>
+                 </array>
+               </map>
+               <key>name</key>

@@ -240,6 +240,10 @@ $
 
 Note that this doesn't remove the repos or the base debian container.
 
+# Autobuild Configuration
+
+To enable avx2 and openal audio, see: avx2-openal-autobuild.xml.diff
+
 # References
 
 + [Firestorm git transition ticket](https://jira.firestormviewer.org/browse/FIRE-29226)
