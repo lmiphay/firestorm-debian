@@ -187,6 +187,18 @@ Finished
 $
 ```
 
+# Compile the project
+
+```
+$ make compile
+docker exec --workdir /local/src/firestorm/phoenix-firestorm --env AUTOBUILD_VARIABLES_FILE=/local/src/firestorm/fs-build-variables/variables --env AUTOBUILD_VARIABLES_ID=nur-2020-02-18-13:09:51 --env PATH=/usr/local/bin:/usr/bin:/bin --user lmiphay:lmiphay firestorm-debian-stretch autobuild build -A 64 -c ReleaseFS_open
+...
+[100%] Built target llpackage
+Finished
+-rw-r--r-- 1 lmiphay lmiphay 158681568 Feb 18 13:48 /cache/src/firestorm/phoenix-firestorm/build-linux-x86_64/newview/Phoenix_FirestormOS-private-0fdf4f16a86d_x86_64_6.3.7.58036.tar.xz
+$
+```
+
 
 ## Update the repos
 
