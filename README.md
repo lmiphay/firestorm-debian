@@ -40,6 +40,7 @@ These settings can be overriden from the environment.
 Outline help is available:
 ```
 $ make help
+pullimage - pull down the base debian stretch image
 settings - list the current settings
 image - make the docker image
 container - create the container
@@ -53,6 +54,18 @@ configure - the project
 compile - the project
 run - execute the binary built by compile
 clean - remove container and image
+$
+```
+
+## Pull the base image
+
+```
+$ make pullimage
+docker pull debian:stretch
+stretch: Pulling from library/debian
+Digest: sha256:da5274336981301e2c5f2edb54eaa4dccee70c39506f96d39377b46ea75e804e
+Status: Downloaded newer image for debian:stretch
+docker.io/library/debian:stretch
 $
 ```
 
@@ -207,7 +220,16 @@ $ make pull
 for repo in autobuild-1.1 fs-build-variables phoenix-firestorm ; do docker exec --user lmiphay:lmiphay firestorm-debian-stretch git -C /local/src/firestorm/$repo pull ; done
 Already up-to-date.
 Already up-to-date.
-Already up-to-date.
+From https://vcs.firestormviewer.org/phoenix-firestorm
+   f7b56e6f7c..df24617e0c  master     -> origin/master
+ * [new tag]               6.3.7-release -> 6.3.7-release
+Updating f7b56e6f7c..df24617e0c
+Fast-forward
+ indra/cmake/jemalloc.cmake                         |  4 ++
+ indra/llaudio/llaudioengine.cpp                    | 14 ++++--
+...
+.../newview/skins/default/xui/zh/floater_about.xml |  3 +-
+ 29 files changed, 195 insertions(+), 78 deletions(-)
 $
 ```
 
