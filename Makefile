@@ -99,6 +99,7 @@ clean:
 	@docker images
 
 help:
+	@echo "pullimage - pull down the base debian $(FD_DEBIAN_VERSION) image"
 	@echo "settings - list the current settings"
 	@echo "image - make the docker image"
 	@echo "container - create the container"
