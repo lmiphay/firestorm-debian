@@ -15,16 +15,16 @@ RUN \
 	apt-get --yes install --install-recommends make g++ gdb python2.7 python-pip && \
 	apt-get --yes install --install-recommends libgl1-mesa-dev libglu1-mesa-dev libstdc++6 libx11-dev libxinerama-dev libxml2-dev libxrender-dev
 
-# RUN pip install autobuild
-RUN pip install "git+https://vcs.firestormviewer.org/autobuild-1.1#egg=autobuild"
-
 # off piste from here:
 RUN apt-get --yes install libxrandr-dev libxcursor-dev libxcomposite-dev libxcb-shm0 sudo
 
 # backports installs: cmake >=3.13.2 (default 3.7.2), git >=2.20.1 (default 2.11.0)
+# Note - must run "apt-get update" after adding stretch-backports
 RUN echo "deb http://deb.debian.org/debian stretch-backports main" >/etc/apt/sources.list.d/stretch-backports.list \
  && apt-get --yes update \
  && apt-get --yes -t stretch-backports install --install-recommends cmake git
+
+RUN pip install "git+https://vcs.firestormviewer.org/autobuild-1.1#egg=autobuild"
 
 RUN \
 	apt-get install -y systemd \
