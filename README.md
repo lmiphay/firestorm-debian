@@ -295,3 +295,4 @@ To enable avx2 and openal audio, see: avx2-openal-autobuild.xml.diff
 + [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
 + [Bitbucket sunsetting mercurial (dates)](https://bitbucket.org/blog/sunsetting-mercurial-support-in-bitbucket)
 + [Compiling the Firestorm Viewer](https://beccapet.datahamster.com/2019/02/01/compiling-the-firestorm-viewer/)
++ [A docker build environment for kokua based on: debian:stretch](https://github.com/lmiphay/kokua-debian)
