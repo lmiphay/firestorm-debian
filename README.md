@@ -2,10 +2,11 @@
 
 A docker build environment for firestorm based on: debian:stretch
 
-This builds:
+This can be used to:
 
-1. a debian 9 stretch container with the firestorm build dependencies installed.
-2. makes firestorm build from the head of: phoenix-firestorm
+1. create a debian 9 stretch image with the firestorm build dependencies installed.
+2. create a docker container which bind mounts in a host location holding the firestorm repo.
+3. build a firestorm from the head of: phoenix-firestorm
 
 # Host Requirements
 
@@ -17,12 +18,17 @@ This builds:
 
 These settings can be overriden from the environment.
 
+## Remote repo settings
+
++ FD_BASE_URL is the URL of the host repo [default: https://vcs.firestormviewer.org]
++ FD_REPOS is the list of repos at FD_BASE_URL [default: "autobuild-1.1 fs-build-variables phoenix-firestorm"]
+
 ## Settings related to the host
 
 + FD_DEBIAN_VERSION is the version of the base debian image [default: stretch ]
 + FD_FIRESTORM_IMAGE is the name of the docker image built with firestorm dependencies added [default: firestorm/debian:stretch ]
 + FD_FIRESTORM_CONTAINER is the name of the container to be built [default: firestorm-debian-stretch ]
-+ FD_HOST_REPOS_DIR is the location of the repo's on the host system [default: /cache/src/firestorm ]
++ FD_HOST_REPOS_DIR is the location of the repo's on the host system [default: /local/src/firestorm ]
 
 ## Settings relevant inside the container
 
@@ -33,6 +39,14 @@ These settings can be overriden from the environment.
 
 + FD_AUTOBUILD_BUILD_ID is the value passed to the AUTOBUILD_VARIABLES_ID autobuild variable [default: "{HOSTNAME}-timestamp"]
 
+# fdc driver
+
+The fdc shell wrapper can be used to store/manage/use settings. It will:
+
++ load settings from ~/.firestorm-debianrc (if that file exists).
++ use the Makefile and Dockerfile in the current directory (if they both exist) - otherwise it will try: /usr/share/firestorm-debian
++ pass any parameters straight through to make.
+
 # Building
 
 ## Help
@@ -40,8 +54,8 @@ These settings can be overriden from the environment.
 Outline help is available:
 ```
 $ make help
-pullimage - pull down the base debian stretch image
 settings - list the current settings
+pullimage - pull down the base debian stretch image
 image - make the docker image
 container - create the container
 start - start the container
@@ -57,6 +71,29 @@ clean - remove container and image
 $
 ```
 
+## Check settings
+
+Examine and fix (if necessary) the configured settings:
+```
+$ make settings
+FD_AUTOBUILD_BUILD_ID="nur-2020-02-23-15:14:45"
+FD_BASE_URL="https://vcs.firestormviewer.org"
+FD_CONTAINER_REPOS_DIR="/local/src/firestorm"
+FD_CONTAINER_USER_GROUP="lmiphay:lmiphay"
+FD_DEBIAN_VERSION="stretch"
+FD_FIRESTORM_CONTAINER="firestorm-debian-stretch"
+FD_FIRESTORM_IMAGE="firestorm/debian:stretch"
+FD_HOST_REPOS_DIR="/local/src/firestorm"
+FD_REPOS="autobuild-1.1 fs-build-variables phoenix-firestorm"
+
+export FD_AUTOBUILD_BUILD_ID FD_BASE_URL FD_CONTAINER_REPOS_DIR FD_CONTAINER_USER_GROUP FD_DEBIAN_VERSION FD_FIRESTORM_CONTAINER FD_FIRESTORM_IMAGE FD_HOST_REPOS_DIR FD_REPOS
+$
+```
+
+This can be used to create an initial (for fdc): ~/.firestorm-debianrc
+
+Note: it is recommended that FD_AUTOBUILD_BUILD_ID not be included in: ~/.firestorm-debianrc
+
 ## Pull the base image
 
 ```
@@ -66,23 +103,6 @@ stretch: Pulling from library/debian
 Digest: sha256:da5274336981301e2c5f2edb54eaa4dccee70c39506f96d39377b46ea75e804e
 Status: Downloaded newer image for debian:stretch
 docker.io/library/debian:stretch
-$
-```
-
-## Check settings
-
-Examine and fix (if necessary) the configured settings:
-```
-$ make settings
-FD_AUTOBUILD_BUILD_ID=nur-2020-02-17-21:09:59
-FD_BASE_URL=https://vcs.firestormviewer.org
-FD_CONTAINER_REPOS_DIR=/local/src/firestorm
-FD_CONTAINER_USER_GROUP=lmiphay:lmiphay
-FD_DEBIAN_VERSION=stretch
-FD_FIRESTORM_CONTAINER=firestorm-debian-stretch
-FD_FIRESTORM_IMAGE=firestorm/debian:stretch
-FD_HOST_REPOS_DIR=/cache/src/firestorm
-FD_REPOS=autobuild-1.1 fs-build-variables phoenix-firestorm
 $
 ```
 
