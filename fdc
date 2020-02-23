@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ -f ~/.firestorm-debianrc ] ; then
+    . ~/.firestorm-debianrc
+fi
+
+if [ -f Makefile -a -f Dockerfile ] ; then
+    make "${@}"
+else
+    make -C /usr/share/firestorm-debian "${@}"
+fi
+
+exit $?
+
