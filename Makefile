@@ -1,7 +1,7 @@
 FD_DEBIAN_VERSION ?= stretch
 FD_FIRESTORM_IMAGE ?= firestorm/debian:$(FD_DEBIAN_VERSION)
 FD_FIRESTORM_CONTAINER ?= firestorm-debian-$(FD_DEBIAN_VERSION)
-FD_HOST_REPOS_DIR ?= /cache/src/firestorm
+FD_HOST_REPOS_DIR ?= /local/src/firestorm
 
 FD_CONTAINER_REPOS_DIR ?= /local/src/firestorm
 FD_CONTAINER_USER_GROUP ?= $(shell id -un):$(shell id -gn)
@@ -34,7 +34,8 @@ all: settings image container start
 .EXPORT_ALL_VARIABLES:
 
 settings:
-	@env | egrep 'FD_' | sort
+	@env | egrep 'FD_' | sort | awk -F'=' '{print $$1 "=" "\"" $$2 "\""}'
+	@echo -ne "\nexport "; env | egrep 'FD_' | sort | awk -F'=' '{printf $$1 " "}'; echo ""
 
 pullimage:
 	docker pull debian:$(FD_DEBIAN_VERSION)
@@ -99,14 +100,14 @@ clean:
 	@docker images
 
 help:
-	@echo "pullimage - pull down the base debian $(FD_DEBIAN_VERSION) image"
 	@echo "settings - list the current settings"
-	@echo "image - make the docker image"
-	@echo "container - create the container"
+	@echo "pullimage - pull down the base debian $(FD_DEBIAN_VERSION) image"
+	@echo "image - create the docker image"
+	@echo "container - create the docker container"
 	@echo "start - start the container"
-	@echo "shell - start a shell on the container"
+	@echo "copy-user - copy $(FD_CONTAINER_USER_GROUP) into the container"
+	@echo "shell - start a user shell on the container"
 	@echo "rootshell - start a rootshell on the container"
-	@echo "copy-user - copy user:group into the container"
 	@echo "clone - clone the projects"
 	@echo "pull - update the projects"
 	@echo "configure - the project"
