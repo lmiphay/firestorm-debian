@@ -1,0 +1,12 @@
+diff --git a/indra/newview/fonts/fonts.xml b/indra/newview/fonts/fonts.xml
+index 3e7eff4d4f..c334b66b33 100644
+--- a/indra/newview/fonts/fonts.xml
++++ b/indra/newview/fonts/fonts.xml
+@@ -3,6 +3,7 @@
+ 
+   <font name="default" comment="default font files (global fallbacks)">
+     <file>DejaVuSans.ttf</file>
++    <file>/usr/share/fonts/unifont/unifont_upper.ttf</file>
+     <os name="Windows">
+       <file>meiryo.TTC</file>
+       <file>YuGothR.ttc</file>
