@@ -82,14 +82,24 @@ pull:
 	for repo in $(FD_REPOS) ; do $(EXEC_CMD) git -C $(FD_CONTAINER_REPOS_DIR)/$$repo pull ; done
 
 configure:
-	$(BUILD_CMD) autobuild configure -A 64 -c ReleaseFS_open
+	$(BUILD_CMD) autobuild configure --verbose -A 64 -c ReleaseFS_open
 
 compile:
 	$(BUILD_CMD) autobuild build -A 64 -c ReleaseFS_open
 	@ls -l $(FD_HOST_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/newview/*.xz
 
+uninstall:
+#	$(BUILD_CMD) autobuild uninstall colladadom icu4c boost -A 64 --verbose
+	$(BUILD_CMD) autobuild uninstall dullahan_gcc5 -A 64 --verbose
+
+print:
+	$(BUILD_CMD) autobuild print -A 64
+
 run:
 	cd $(FD_HOST_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/newview/packaged && ./firestorm
+
+clean_packages:
+	docker exec $(FD_FIRESTORM_CONTAINER) rm -rf $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/packages
 
 clean:
 	-docker rm --force $(FD_FIRESTORM_CONTAINER)
@@ -113,4 +123,5 @@ help:
 	@echo "configure - the project"
 	@echo "compile - the project"
 	@echo "run - execute the binary built by compile"
+	@echo "clean_packages - remove all installed packages (when nothing else works)"
 	@echo "clean - remove container and image"

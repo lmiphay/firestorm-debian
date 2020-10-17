@@ -286,6 +286,22 @@ Note that this doesn't remove the repos or the base debian container.
 
 To enable avx2 and openal audio, see: avx2-openal-autobuild.xml.diff
 
+# Uninstalling Packages
+
+If a package (e.g. boost, dullahan_gcc5) is bumped, it may be necessary to first remove other packages which depend on it (e.g. colladadom, icu4c).
+
+An example `uninstall` target is present (may be necessary to modify it depending on what package has been bumped)
+
+```
+make uninstall
+```
+
+The `clean_packages` target can be used to remove all installed packages when nothing else works.
+
+```
+make clean_packages
+```
+
 # References
 
 + [Firestorm git transition ticket](https://jira.firestormviewer.org/browse/FIRE-29226)
