@@ -1,0 +1,35 @@
+diff --git a/autobuild.xml b/autobuild.xml
+index 6316c6edb5..2b9625a69d 100644
+--- a/autobuild.xml
++++ b/autobuild.xml
+@@ -4028,6 +4028,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
+                   <string>--build</string>
+                   <string>--version</string>
+                   <string>--opensim</string>
++		  <string>--openal</string>
++		  <string>--avx2</string>
+                 </array>
+               </map>
+               <key>configure</key>
+@@ -4040,6 +4042,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
+                   <string>--config</string>
+                   <string>--version</string>
+                   <string>--opensim</string>
++		  <string>--openal</string>
++		  <string>--avx2</string>
+                 </array>
+               </map>
+               <key>name</key>
+diff --git a/indra/newview/fonts/fonts.xml b/indra/newview/fonts/fonts.xml
+index 4d921b7a5d..70b0eb90c1 100644
+--- a/indra/newview/fonts/fonts.xml
++++ b/indra/newview/fonts/fonts.xml
+@@ -3,6 +3,8 @@
+ 
+   <font name="default" comment="default font files (global fallbacks)">
+     <file>DejaVuSans.ttf</file>
++    <file>/usr/share/fonts/unifont/unifont_upper.ttf</file>
++    <file>/usr/share/fonts/unifont/unifont.ttf</file>
+     <os name="Windows">
+       <file>meiryo.TTC</file>
+       <file>YuGothR.ttc</file>
