@@ -1,10 +1,10 @@
 # firestorm-debian
 
-A docker build environment for firestorm based on: debian:stretch
+A docker build environment for firestorm based on Ubuntu (previously debian).
 
 This can be used to:
 
-1. create a debian 9 stretch image with the firestorm build dependencies installed.
+1. create a image with the firestorm build dependencies installed.
 2. create a docker container which bind mounts in a host location holding the firestorm repo.
 3. build a firestorm from the head of: phoenix-firestorm
 
@@ -25,9 +25,9 @@ These settings can be overriden from the environment.
 
 ## Settings related to the host
 
-+ FD_DEBIAN_VERSION is the version of the base debian image [default: stretch ]
-+ FD_FIRESTORM_IMAGE is the name of the docker image built with firestorm dependencies added [default: firestorm/debian:stretch ]
-+ FD_FIRESTORM_CONTAINER is the name of the container to be built [default: firestorm-debian-stretch ]
++ FD_UBUNTU_VERSION is the version of the base image
++ FD_FIRESTORM_IMAGE is the name of the docker image built with firestorm dependencies added
++ FD_FIRESTORM_CONTAINER is the name of the container to be built
 + FD_HOST_REPOS_DIR is the location of the repo's on the host system [default: /local/src/firestorm ]
 
 ## Settings relevant inside the container
@@ -55,7 +55,7 @@ Outline help is available:
 ```
 $ make help
 settings - list the current settings
-pullimage - pull down the base debian stretch image
+pullimage - pull down the base image
 image - make the docker image
 container - create the container
 start - start the container
@@ -80,13 +80,13 @@ FD_AUTOBUILD_BUILD_ID="nur-2020-02-23-15:14:45"
 FD_BASE_URL="https://vcs.firestormviewer.org"
 FD_CONTAINER_REPOS_DIR="/local/src/firestorm"
 FD_CONTAINER_USER_GROUP="lmiphay:lmiphay"
-FD_DEBIAN_VERSION="stretch"
-FD_FIRESTORM_CONTAINER="firestorm-debian-stretch"
-FD_FIRESTORM_IMAGE="firestorm/debian:stretch"
+FD_UBUNTU_VERSION="stretch"
+FD_FIRESTORM_CONTAINER="firestorm-ubuntu-stretch"
+FD_FIRESTORM_IMAGE="firestorm/ubuntu:stretch"
 FD_HOST_REPOS_DIR="/local/src/firestorm"
 FD_REPOS="autobuild-1.1 fs-build-variables phoenix-firestorm"
 
-export FD_AUTOBUILD_BUILD_ID FD_BASE_URL FD_CONTAINER_REPOS_DIR FD_CONTAINER_USER_GROUP FD_DEBIAN_VERSION FD_FIRESTORM_CONTAINER FD_FIRESTORM_IMAGE FD_HOST_REPOS_DIR FD_REPOS
+export FD_AUTOBUILD_BUILD_ID FD_BASE_URL FD_CONTAINER_REPOS_DIR FD_CONTAINER_USER_GROUP FD_UBUNTU_VERSION FD_FIRESTORM_CONTAINER FD_FIRESTORM_IMAGE FD_HOST_REPOS_DIR FD_REPOS
 $
 ```
 
@@ -290,13 +290,13 @@ To enable avx2 and openal audio, see: avx2-openal-autobuild.xml.diff
 
 If a package (e.g. boost, dullahan_gcc5) is bumped, it may be necessary to first remove other packages which depend on it (e.g. colladadom, icu4c).
 
-An example `uninstall` target is present (may be necessary to modify it depending on what package has been bumped)
+The `uninstall` target will remove _ALL_ downloaded packages (using `autobuild ... -- --clean`).
 
 ```
 make uninstall
 ```
 
-The `clean_packages` target can be used to remove all installed packages when nothing else works.
+The `clean_packages` target can be used to remove all installed packages when nothing else works (by `rm -rf ...` the build packages area).
 
 ```
 make clean_packages
@@ -305,7 +305,7 @@ make clean_packages
 # References
 
 + [Ubuntu Docker Hub Images](https://hub.docker.com/_/ubuntu)
-+ [Firestorm Debian build](https://wiki.firestormviewer.org/fs_compiling_firestorm_linux_ubuntu18)
++ [Firestorm Linux Build](https://wiki.firestormviewer.org/fs_compiling_firestorm_linux_ubuntu18)
 + [Nicky Dasmijn, fs-dockerfiles](https://bitbucket.org/NickyD/fs-dockerfiles/src/master/linux/)
 + [Firestorm Windows build with git](https://wiki.firestormviewer.org/fs_compiling_firestorm_windows)
 + [Autobuild](http://wiki.secondlife.com/wiki/Autobuild)
