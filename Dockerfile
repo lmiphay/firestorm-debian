@@ -1,7 +1,9 @@
 #
-# See: https://wiki.firestormviewer.org/fs_compiling_firestorm_alexivy_debian_9
+# See: https://wiki.firestormviewer.org/fs_compiling_firestorm_linux_ubuntu18
 #
-FROM debian:stretch
+ARG FD_UBUNTU_VERSION
+
+FROM ubuntu:$FD_UBUNTU_VERSION
 
 ENV container docker
 ENV LC_ALL C
@@ -11,20 +13,32 @@ RUN \
 	apt-get --yes update && \
 	apt-get --yes upgrade
 
+RUN apt --yes install --install-recommends \
+	libgl1-mesa-dev libglu1-mesa-dev libpulse-dev build-essential python-pip git \
+	libssl-dev \
+	libxcb-shm0 \
+	libxcb-shm0-dev \
+	libxcomposite-dev \
+	libxcursor-dev \
+	libxinerama-dev \
+	libxml2-dev \
+	libxrandr-dev \
+	libxrender-dev \
+	gdb \
+	openssl1.0 \
+	sudo \
+	wget
+
 RUN \
-	apt-get --yes install --install-recommends make g++ gdb python2.7 python-pip && \
-	apt-get --yes install --install-recommends libgl1-mesa-dev libglu1-mesa-dev libstdc++6 libx11-dev libxinerama-dev libxml2-dev libxrender-dev
+	pip install --upgrade pip && \
+	pip install autobuild
 
-# off piste from here:
-RUN apt-get --yes install libxrandr-dev libxcursor-dev libxcomposite-dev libxcb-shm0 sudo
-
-# backports installs: cmake >=3.13.2 (default 3.7.2), git >=2.20.1 (default 2.11.0)
-# Note - must run "apt-get update" after adding stretch-backports
-RUN echo "deb http://deb.debian.org/debian stretch-backports main" >/etc/apt/sources.list.d/stretch-backports.list \
- && apt-get --yes update \
- && apt-get --yes -t stretch-backports install --install-recommends cmake git
-
-RUN pip install "git+https://vcs.firestormviewer.org/autobuild-1.1#egg=autobuild"
+RUN \
+	cd /tmp && \
+	wget https://github.com/Kitware/CMake/releases/download/v3.18.0/cmake-3.18.0.tar.gz && \
+	tar xvf cmake-3.18.0.tar.gz && \
+	cd cmake-3.18.0 && \
+	./bootstrap --prefix=/usr && make -j 4 && make install
 
 RUN \
 	apt-get install -y systemd \

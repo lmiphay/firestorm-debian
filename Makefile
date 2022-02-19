@@ -1,6 +1,6 @@
-FD_DEBIAN_VERSION ?= stretch
-FD_FIRESTORM_IMAGE ?= firestorm/debian:$(FD_DEBIAN_VERSION)
-FD_FIRESTORM_CONTAINER ?= firestorm-debian-$(FD_DEBIAN_VERSION)
+FD_UBUNTU_VERSION ?= 18.04
+FD_FIRESTORM_IMAGE ?= firestorm/ubuntu:$(FD_UBUNTU_VERSION)
+FD_FIRESTORM_CONTAINER ?= firestorm-ubuntu-$(FD_UBUNTU_VERSION)
 FD_HOST_REPOS_DIR ?= /local/src/firestorm
 
 FD_CONTAINER_REPOS_DIR ?= /local/src/firestorm
@@ -38,11 +38,13 @@ settings:
 	@echo -ne "\nexport "; env | egrep 'FD_' | sort | awk -F'=' '{printf $$1 " "}'; echo ""
 
 pullimage:
-	docker pull debian:$(FD_DEBIAN_VERSION)
+	docker pull ubuntu:$(FD_UBUNTU_VERSION)
 
 image:
-	docker build --progress=plain --tag $(FD_FIRESTORM_IMAGE) .
-	@docker images | grep firestorm/debian
+	docker build --progress=plain --tag $(FD_FIRESTORM_IMAGE) \
+		--build-arg FD_UBUNTU_VERSION=$(FD_UBUNTU_VERSION) \
+		.
+	@docker images | grep firestorm/ubuntu
 
 #
 # TODO: replace "--privileged=true" with "--tmpfs /tmp --tmpfs /run"
@@ -89,8 +91,9 @@ compile:
 	@ls -l $(FD_HOST_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/newview/*.xz
 
 uninstall:
-#	$(BUILD_CMD) autobuild uninstall colladadom icu4c boost -A 64 --verbose
-	$(BUILD_CMD) autobuild uninstall dullahan_gcc5 -A 64 --verbose
+	$(BUILD_CMD) autobuild configure -A 64 -c ReleaseFS_open -- --clean
+#$(BUILD_CMD) autobuild uninstall colladadom icu4c boost -A 64 --verbose
+#$(BUILD_CMD) autobuild uninstall dullahan_gcc5 -A 64 --verbose
 
 print:
 	$(BUILD_CMD) autobuild print -A 64
@@ -111,7 +114,7 @@ clean:
 
 help:
 	@echo "settings - list the current settings"
-	@echo "pullimage - pull down the base debian $(FD_DEBIAN_VERSION) image"
+	@echo "pullimage - pull down the base ubuntu $(FD_UBUNTU_VERSION) image"
 	@echo "image - create the docker image"
 	@echo "container - create the docker container"
 	@echo "start - start the container"
