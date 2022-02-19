@@ -1,8 +1,8 @@
 diff --git a/autobuild.xml b/autobuild.xml
-index 0b7450f402..ec728a1d4d 100644
+index bcb424112c..71471cf8dc 100644
 --- a/autobuild.xml
 +++ b/autobuild.xml
-@@ -3940,6 +3940,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
+@@ -3930,6 +3930,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
                    <string>--build</string>
                    <string>--version</string>
                    <string>--opensim</string>
@@ -11,7 +11,7 @@ index 0b7450f402..ec728a1d4d 100644
                  </array>
                </map>
                <key>configure</key>
-@@ -3952,6 +3954,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
+@@ -3942,6 +3944,8 @@ Copyright (c) 2012, 2014, 2015, 2016 nghttp2 contributors</string>
                    <string>--config</string>
                    <string>--version</string>
                    <string>--opensim</string>
