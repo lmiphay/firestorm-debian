@@ -314,3 +314,5 @@ make clean_packages
 + [Bitbucket sunsetting mercurial (dates)](https://bitbucket.org/blog/sunsetting-mercurial-support-in-bitbucket)
 + [Firestorm git transition ticket](https://jira.firestormviewer.org/browse/FIRE-29226)
 + [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
++ [Arch Linux Package](https://aur.archlinux.org/packages/firestorm)
++ [Arch LInux Bin Package](https://aur.archlinux.org/packages/firestorm-bin)
