@@ -304,11 +304,13 @@ make clean_packages
 
 # References
 
-+ [Firestorm git transition ticket](https://jira.firestormviewer.org/browse/FIRE-29226)
++ [Ubuntu Docker Hub Images](https://hub.docker.com/_/ubuntu)
++ [Firestorm Debian build](https://wiki.firestormviewer.org/fs_compiling_firestorm_linux_ubuntu18)
++ [Nicky Dasmijn, fs-dockerfiles](https://bitbucket.org/NickyD/fs-dockerfiles/src/master/linux/)
 + [Firestorm Windows build with git](https://wiki.firestormviewer.org/fs_compiling_firestorm_windows)
-+ [Firestorm Debian build](https://wiki.firestormviewer.org/fs_compiling_firestorm_alexivy_debian_9)
 + [Autobuild](http://wiki.secondlife.com/wiki/Autobuild)
-+ [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
-+ [Bitbucket sunsetting mercurial (dates)](https://bitbucket.org/blog/sunsetting-mercurial-support-in-bitbucket)
 + [Compiling the Firestorm Viewer](https://beccapet.datahamster.com/2019/02/01/compiling-the-firestorm-viewer/)
 + [A docker build environment for kokua based on: debian:stretch](https://github.com/lmiphay/kokua-debian)
++ [Bitbucket sunsetting mercurial (dates)](https://bitbucket.org/blog/sunsetting-mercurial-support-in-bitbucket)
++ [Firestorm git transition ticket](https://jira.firestormviewer.org/browse/FIRE-29226)
++ [Transition to git](https://lists.secondlife.com/pipermail/opensource-dev/2019-August/010647.html)
