@@ -15,6 +15,7 @@ RUN \
 
 RUN apt --yes install --install-recommends \
 	libgl1-mesa-dev libglu1-mesa-dev libpulse-dev build-essential python-pip git \
+	python3-pip libfontconfig1-dev libfreetype6-dev \
 	libssl-dev \
 	libxcb-shm0 \
 	libxcb-shm0-dev \
@@ -29,9 +30,14 @@ RUN apt --yes install --install-recommends \
 	sudo \
 	wget
 
+
+# autobuild needs python >=3.7 (3.6 is shipped with Ubuntu 18.04)
 RUN \
-	pip install --upgrade pip && \
-	pip install autobuild
+	apt install -y python3.8 && \
+	update-alternatives --install /usr/bin/python python /usr/bin/python3.8 9 && \
+	update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.8 9 && \
+	pip3 install --upgrade pip && \
+	pip3 install git+https://bitbucket.org/lindenlab/autobuild.git#egg=autobuild
 
 RUN \
 	cd /tmp && \
