@@ -9,7 +9,10 @@ FD_CONTAINER_USER_GROUP ?= $(shell id -un):$(shell id -gn)
 FD_AUTOBUILD_BUILD_ID ?= $(shell hostname)-$(shell date +'%F-%T')
 
 FD_BASE_URL ?= https://vcs.firestormviewer.org
-FD_REPOS ?= autobuild-1.1 fs-build-variables phoenix-firestorm
+FD_REPOS ?= fs-build-variables phoenix-firestorm
+
+ROOT_CMD = \
+	docker exec -it $(FD_FIRESTORM_CONTAINER)
 
 EXEC_CMD = \
 	docker exec \
@@ -104,6 +107,11 @@ run:
 clean_packages:
 	docker exec $(FD_FIRESTORM_CONTAINER) rm -rf $(FD_CONTAINER_REPOS_DIR)/phoenix-firestorm/build-linux-x86_64/packages
 
+update_container:
+	$(ROOT_CMD) apt update
+	$(ROOT_CMD) apt list --upgradable
+	$(ROOT_CMD) apt upgrade -y
+
 clean:
 	-docker rm --force $(FD_FIRESTORM_CONTAINER)
 	-docker rmi --force $(FD_FIRESTORM_IMAGE)
@@ -123,6 +131,7 @@ help:
 	@echo "rootshell - start a rootshell on the container"
 	@echo "clone - clone the projects"
 	@echo "pull - update the projects"
+	@echo "update_container - update Ubuntu using apt"
 	@echo "configure - the project"
 	@echo "compile - the project"
 	@echo "run - execute the binary built by compile"
