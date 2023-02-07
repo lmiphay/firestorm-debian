@@ -232,6 +232,13 @@ Finished
 $
 ```
 
+## Upgrade the container
+
+To run `apt upgrade` inside the container:
+
+```
+$ make update_container
+```
 
 ## Update the repos
 
@@ -305,7 +312,8 @@ make clean_packages
 # References
 
 + [Ubuntu Docker Hub Images](https://hub.docker.com/_/ubuntu)
-+ [Firestorm Linux Build](https://wiki.firestormviewer.org/fs_compiling_firestorm_linux_ubuntu18)
++ [Firestorm Compiling on Linux](https://wiki.firestormviewer.org/fs_compiling_firestorm_linux)
+* [Firestorm Compiling](https://wiki.firestormviewer.org/fs_compiling_firestorm)
 + [Nicky Dasmijn, fs-dockerfiles](https://bitbucket.org/NickyD/fs-dockerfiles/src/master/linux/)
 + [Anakima Docker Build Env](https://github.com/anakima/firestorm-docker-build-env)
 + [Firestorm Windows build with git](https://wiki.firestormviewer.org/fs_compiling_firestorm_windows)
